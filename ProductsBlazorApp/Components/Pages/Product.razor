@@ -1,0 +1,68 @@
+﻿@page "/product"
+@rendermode InteractiveServer
+
+<PageTitle>Product</PageTitle>
+
+<h3>Products</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Name
+			</th>
+			<th>
+				Category Name
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+			   Price
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+
+        @foreach(var prod in products)
+        {
+			<tr>
+				<td>
+					@prod.Name
+				</td>
+				<td>
+					@prod.CategoryName
+				</td>
+				<td>
+					@prod.Description
+				</td>
+				<td>
+					@prod.Price
+				</td>
+			</tr>
+        }
+	</tbody>
+</table>
+
+
+<input @bind="newName" placeholder="Product Name" />
+<button @onclick="AddProduct">Add Product</button>
+
+@code {
+
+    private List<ProdItem> products = new();
+    
+    private string? newName;
+     private int id = 0;
+    private void AddProduct()
+    {
+        if (!string.IsNullOrWhiteSpace(newName))
+        {
+            products.Add(
+                new ProdItem { ProductId = id++, Name = newName, CategoryName = "Test Category " + id++, Description = "Test Desc" + id++, Price = 100 + id++ }
+            );
+            newName = string.Empty;
+        }
+        
+    }
+}
